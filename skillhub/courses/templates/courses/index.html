@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load courses_tags %}
+{% block content %}
+<nav class="top-nav">
+    <a href="#">About</a>
+    <a href="#">Contacts</a>
+    <a href="#">Help</a>
+</nav>
+
+<header>SkillHub Courses</header>
+{% show_navbar selected_cat %}
+
+    <section class="course-grid">
+    {% count_courses_by_category selected_cat as courses_count %}
+    {% if courses_count == 0 and selected_cat != 0 %}
+        <div class="course-card">
+            <div class="course-title">There are not available courses</div>
+        </div>
+    {% else %}
+    {% for course in courses %}
+        {% if course.category == selected_cat or selected_cat == 0%}
+        <div class="course-card">
+            <div class="course-title">{{ course.title }}</div>
+            <div class="course-description">{{ course.description }}</div>
+            <a href="{% url 'course' course.id %}" class="btn">about</a>
+        </div>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+    </section>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+<aside class="side-nav">
+        <h3>Categories</h3>
+    <ul>
+        <li class="{% if selected_cat == 0 %}selected{% endif %}"><a href="{% url 'index' %}">All</a></li>
+        {% for cat in cats %}
+        <li class="{% if cat.id == selected_cat %}selected{% endif %}">
+        <a href="{% url 'category' cat.id %}">{{ cat.name|title }}</a></li>
+        </li>
+        {% endfor %}
+    </ul>
+</aside>
