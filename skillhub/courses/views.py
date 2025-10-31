@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from courses.models import Course, Category
+
 # Create your views here.
 
 courses_base = [
@@ -17,14 +19,19 @@ cats = [
 ]
 
 def index(request):
-    context = {'courses': courses_base, 'cats': cats, 'selected_cat': 0}
+    courses = Course.objects.all()
+    cats = Category.objects.all()
+    context = {'courses': courses, 'cats': cats, 'selected_cat': 0}
     return render(request, 'courses/index.html', context)
 
 
 def course(request, course_id):
-    context = {'course': courses_base[course_id - 1]}
+    course = Course.objects.get(id=course_id)
+    context = {'course': course}
     return render(request, 'courses/course.html', context)
 
 def category(request, category_id):
-    context = {'courses': courses_base, 'cats': cats, 'selected_cat': category_id}
+    courses = Course.objects.filter(category_id=category_id)
+    cats = Category.objects.all()
+    context = {'courses': courses, 'cats': cats, 'selected_cat': category_id}
     return render(request, 'courses/index.html', context)
