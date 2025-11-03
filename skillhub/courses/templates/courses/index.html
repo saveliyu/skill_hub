@@ -22,7 +22,7 @@
         <div class="course-card">
             <div class="course-title">{{ course.title }}</div>
             <div class="course-description">{{ course.description }}</div>
-            <a href="{% url 'course' course.id %}" class="btn">about</a>
+            <a href="{% url 'course' course.slug %}" class="btn">about</a>
         </div>
     {% endfor %}
     {% endif %}

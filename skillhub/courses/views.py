@@ -25,8 +25,8 @@ def index(request):
     return render(request, 'courses/index.html', context)
 
 
-def course(request, course_id):
-    course = Course.objects.get(id=course_id)
+def course(request, course_slug):
+    course = Course.objects.get(slug=course_slug)
     context = {'course': course}
     return render(request, 'courses/course.html', context)
 
