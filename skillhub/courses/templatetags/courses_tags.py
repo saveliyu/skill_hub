@@ -6,7 +6,9 @@ register = template.Library()
 
 @register.simple_tag()
 def count_courses_by_category(category):
-    return len(Course.objects.filter(category=category))
+    if category == 0:
+        return len(Course.published.all())
+    return len(Course.published.filter(category=Category.objects.get(slug=category)))
 
 @register.inclusion_tag('courses/navbar.html')
 def show_navbar(selected_cat=0):

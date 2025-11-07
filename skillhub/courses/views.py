@@ -1,5 +1,6 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.utils.text import slugify
 
 from courses.models import Course, Category
 
@@ -19,19 +20,18 @@ cats = [
 ]
 
 def index(request):
-    courses = Course.objects.all()
+    courses = Course.published.all()
     cats = Category.objects.all()
     context = {'courses': courses, 'cats': cats, 'selected_cat': 0}
     return render(request, 'courses/index.html', context)
 
-
 def course(request, course_slug):
-    course = Course.objects.get(slug=course_slug)
+    course = get_object_or_404(Course, slug=course_slug)
     context = {'course': course}
     return render(request, 'courses/course.html', context)
 
-def category(request, category_id):
-    courses = Course.objects.filter(category_id=category_id)
+def category(request, category_slug):
+    courses = Course.published.filter(category=Category.objects.get(slug=category_slug))
     cats = Category.objects.all()
-    context = {'courses': courses, 'cats': cats, 'selected_cat': category_id}
+    context = {'courses': courses, 'cats': cats, 'selected_cat': category_slug}
     return render(request, 'courses/index.html', context)

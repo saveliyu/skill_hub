@@ -13,7 +13,7 @@
 
     <section class="course-grid">
     {% count_courses_by_category selected_cat as courses_count %}
-    {% if courses_count == 0 and selected_cat != 0 %}
+    {% if courses_count == 0 %}
         <div class="course-card">
             <div class="course-title">There are not available courses</div>
         </div>
@@ -21,8 +21,8 @@
     {% for course in courses %}
         <div class="course-card">
             <div class="course-title">{{ course.title }}</div>
-            <div class="course-description">{{ course.description }}</div>
-            <a href="{% url 'course' course.slug %}" class="btn">about</a>
+            <div class="course-description">{{ course.description|linebreaks|truncatewords:15 }}</div>
+            <a href="{{ course.get_absolute_url }}" class="btn">about</a>
         </div>
     {% endfor %}
     {% endif %}
