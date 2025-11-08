@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load courses_tags %}
+
+{% block title %}{{ title|title }}{% endblock %}
+
 {% block content %}
 
 
@@ -23,6 +26,10 @@
             <div class="course-title">{{ course.title }}</div>
             <div class="course-description">{{ course.description|linebreaks|truncatewords:15 }}</div>
             <a href="{{ course.get_absolute_url }}" class="btn">about</a>
+            <div class="course-footer">
+                <p class="topic">{{ course.category.name }}</p>
+                <p class="date">{{ course.updated|date:"d.m.Y" }}</p>
+            </div>
         </div>
     {% endfor %}
     {% endif %}

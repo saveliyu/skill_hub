@@ -106,3 +106,50 @@ header {
 .selected {
     text-decoration: underline;
 }
+
+.course-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    border-top: 1px solid #ffe81f44;
+    padding-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #bbb;
+}
+
+.course-footer p {
+    margin: 0;
+}
+
+.course-footer .topic {
+    color: #888;
+    font-weight: 600;
+}
+
+.course-footer .date {
+    color: #888;
+    font-style: italic;
+}
+
+.course-card {
+    position: relative; /* важно — позволяет позиционировать кнопку внутри */
+}
+
+/* Перемещаем кнопку в правый верхний угол */
+.course-card .btn {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    margin: 0; /* убираем старый отступ */
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    box-shadow: 0 0 10px #ffe81f;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Эффект наведения */
+.course-card .btn:hover {
+    box-shadow: 0 0 15px #ffe81f, 0 0 5px #ffe81f inset;
+    transform: scale(1.05);
+}

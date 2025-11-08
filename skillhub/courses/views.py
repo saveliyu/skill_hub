@@ -22,16 +22,17 @@ cats = [
 def index(request):
     courses = Course.published.all()
     cats = Category.objects.all()
-    context = {'courses': courses, 'cats': cats, 'selected_cat': 0}
+    context = {'courses': courses, 'title': 'SkillHub Courses', 'cats': cats, 'selected_cat': 0}
     return render(request, 'courses/index.html', context)
 
 def course(request, course_slug):
     course = get_object_or_404(Course, slug=course_slug)
-    context = {'course': course}
+    context = {'course': course, 'title': course.title}
     return render(request, 'courses/course.html', context)
 
 def category(request, category_slug):
-    courses = Course.published.filter(category=Category.objects.get(slug=category_slug))
-    cats = Category.objects.all()
-    context = {'courses': courses, 'cats': cats, 'selected_cat': category_slug}
+    category = get_object_or_404(Category, slug=category_slug)
+    courses = Course.published.filter(category__id=category.pk)
+
+    context = {'title': f'SkillHub Courses: {category.name}', 'courses': courses, 'selected_cat': category_slug}
     return render(request, 'courses/index.html', context)
