@@ -11,7 +11,10 @@
     <a href="#">Contacts</a>
     <a href="#">Help</a>
 </nav>
-{% show_navbar selected_cat %}
+<aside class="side-nav">
+    {% show_navbar selected_cat %}
+    {% show_tagsbar %}
+</aside>
 <header>SkillHub Courses</header>
 
     <section class="course-grid">
@@ -26,6 +29,11 @@
             <div class="course-title">{{ course.title }}</div>
             <div class="course-description">{{ course.description|linebreaks|truncatewords:15 }}</div>
             <a href="{{ course.get_absolute_url }}" class="btn">about</a>
+            <div class="tags">
+                {% for tag in course.tags.all %}
+                    <a href="{{ tag.get_absolute_url }}" class="tag">{{ tag.tag }}</a>
+                {% endfor %}
+            </div>
             <div class="course-footer">
                 <p class="topic">{{ course.category.name }}</p>
                 <p class="date">{{ course.updated|date:"d.m.Y" }}</p>

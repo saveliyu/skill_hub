@@ -1,12 +1,12 @@
 from django import template
 from .. import views
-from ..models import Category, Course
+from ..models import Category, Course, TagCourse
 
 register = template.Library()
 
 @register.simple_tag()
 def count_courses_by_category(category):
-    if category == 0:
+    if not category:
         return len(Course.published.all())
     return len(Course.published.filter(category=Category.objects.get(slug=category)))
 
@@ -14,3 +14,8 @@ def count_courses_by_category(category):
 def show_navbar(selected_cat=0):
     cats = Category.objects.all()
     return {'cats': cats, 'selected_cat': selected_cat}
+
+@register.inclusion_tag('courses/tagsbar.html')
+def show_tagsbar():
+    tags = TagCourse.objects.all()
+    return {'tags': tags}

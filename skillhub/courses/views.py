@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
 
-from courses.models import Course, Category
+from courses.models import Course, Category, TagCourse
 
 # Create your views here.
 
@@ -34,5 +34,19 @@ def category(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
     courses = Course.published.filter(category__id=category.pk)
 
-    context = {'title': f'SkillHub Courses: {category.name}', 'courses': courses, 'selected_cat': category_slug}
+    context = {
+        'title': f'SkillHub Courses: {category.name}',
+        'courses': courses,
+        'selected_cat': category_slug
+    }
+    return render(request, 'courses/index.html', context)
+
+def show_by_tag(request, tag_slug):
+    tag = get_object_or_404(TagCourse, slug=tag_slug)
+    courses = tag.courses.filter(is_published=Course.Status.PUBLISHED)
+    context =  {
+        'title': f'SkillHub Courses with "{tag.tag}" tag',
+        'courses': courses,
+        'selected_cat': None,
+    }
     return render(request, 'courses/index.html', context)

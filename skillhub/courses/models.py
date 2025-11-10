@@ -36,6 +36,7 @@ class Course(models.Model):
     updated = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='courses')
     is_published = models.BooleanField(choices=Status.choices, default=Status.DRAFT)
+    tags = models.ManyToManyField('TagCourse', blank=True, related_name='courses')
 
     objects = models.Manager()
     published = PublishedManager()
@@ -51,3 +52,13 @@ class Course(models.Model):
 
     def get_absolute_url(self):
         return reverse('course', kwargs={'course_slug': self.slug})
+
+class TagCourse(models.Model):
+    tag = models.CharField(max_length=100, db_index=True)
+    slug = models.SlugField(max_length=100, unique=True, db_index=True)
+
+    def __str__(self):
+        return self.tag
+
+    def get_absolute_url(self):
+        return reverse('tag', kwargs={'tag_slug': self.slug})
